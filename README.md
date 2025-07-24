@@ -23,6 +23,9 @@ This project is an implementation of k-NN without the use of advanced plug and p
 
 - Regression: Take the average value of the k nearest neighbors.
 
-
+## Datasets
+- Iris
+    - Fisher, R. (1936). Iris [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C56C76.
+    - [Download Link](https://archive.ics.uci.edu/dataset/53/iris)
 
 
