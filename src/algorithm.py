@@ -1,14 +1,12 @@
 import numpy as np
+from sympy.codegen.numpy_nodes import minimum
+
 
 def euclidean_distance(known_point, new_point):
     difference = np.array(known_point) - np.array(new_point)
-
     squared_difference = difference ** 2
-
     sum = np.sum(squared_difference)
-
     distance = np.sqrt(sum)
-
     return distance
 
 class kNN_classification:
@@ -18,10 +16,12 @@ class kNN_classification:
         self.val_set = val_set
         self.k_set = k_set
 
+        # derived
         self.validation_point_data = []
+        self.new_point_label_set = []
 
 
-    def calculate_distances_of_new_points_to_every_known_points(self):
+    def calculate_distances(self):
         # clear list of past data
         self.validation_point_data = []
 
@@ -47,12 +47,21 @@ class kNN_classification:
             this list contains 
             1. index of validation point
             2. list containing
-                (label of known point , distance to known point) 
+                (distance to known point, label of known point) 
             '''
             self.validation_point_data.append([new_point_index,distance_label_set])
 
 
-    # def label_new_points_for_every_k_samples(self):
+    def calculate_label(self):
+        for new_point_index, distance_label_set in self.validation_point_data:
+            # sorted in ascending order of distances
+            distance_label_set_sorted = sorted(distance_label_set, key=lambda x: x[0], reverse=False)
+            minimum_distance , predicted_label = distance_label_set_sorted[0]
+
+            self.new_point_label_set.append([new_point_index,predicted_label])
+
+
+
 
 
 
