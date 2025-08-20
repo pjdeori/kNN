@@ -40,16 +40,20 @@ if __name__ == '__main__':
     np.random.shuffle(data)
 
     # partitioning
-    train_set, test_set, val_set = partition(data=data)
+    class_set = list(set(np.asarray(data)[:,-1].tolist()))
+    train_set, test_set, val_set = partition(data=data, train_percentage=80,val_percentage=20,test_percentage=0)
 
     # kNN
     model = kNN_classification(
         train_set,
         test_set,
         val_set,
-        k_set=[1, 3, 5, 10, 15]
+        class_set=class_set,
+        k_set=np.arange(1, 45, 2)
     )
 
     model.calculate_distances()
-    model.calculate_label()
-    print(model.new_point_label_set)
+    model.calculate_k_stats()
+
+    for k_result in model.kNN_Result_set:
+        k_result.summarize()
