@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def parse_value(value):
     # check if integer
     try:
@@ -35,15 +34,10 @@ def load_data(path):
             parsed_value = parse_value(part)
             row.append(parsed_value)
         data.append(row)
-
     return data
-
 
 def partition(data, train_percentage=70,test_percentage=15,val_percentage=15):
     number_of_rows = len(data)
-    train_percentage = 70
-    test_percentage = 15
-    val_percentage = 15
 
     if train_percentage + test_percentage + val_percentage == 100:
         train_index = int(number_of_rows * (train_percentage / 100))  # index at 70% of data
@@ -57,3 +51,17 @@ def partition(data, train_percentage=70,test_percentage=15,val_percentage=15):
         return train_set,test_set,val_set
     else:
         print('partitioning failed, error in splitting ratios')
+
+def get_majority_class(k_labels):
+    freq = {}
+    for label in k_labels:
+        if label not in freq:
+            freq[label] = 0
+        freq[label] += 1
+
+    # get majority class (highest frequency)
+    majority_class = max(freq, key=freq.get)
+    return majority_class
+
+
+
